@@ -1,0 +1,10 @@
+{{define "expense-list"}}
+<div class="expense-list">
+  {{if .Expenses}} {{range .Expenses}} {{template "expense-item" .}} {{end}}
+  {{else}}
+  <div class="no-expenses">
+    <p>No transactions recorded yet.</p>
+  </div>
+  {{end}}
+</div>
+{{end}}

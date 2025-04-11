@@ -46,3 +46,11 @@ WHERE
 RETURNING
     *;
 
+
+-- name: ListTxnsByDate :many
+SELECT
+  DATE(timestamp) AS date,
+  CAST(SUM(amount) AS integer) AS amount
+FROM txn
+GROUP BY DATE(timestamp)
+ORDER BY DATE(timestamp);

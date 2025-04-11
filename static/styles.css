@@ -1,0 +1,362 @@
+/* Base Styles - Material UI Inspired */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap");
+
+:root {
+  --primary-color: #6200ee;
+  --primary-light: #bb86fc;
+  --primary-dark: #3700b3;
+  --secondary-color: #03dac6;
+  --secondary-dark: #018786;
+  --income-color: #00c853;
+  --expense-color: #f44336;
+  --background: #f5f5f5;
+  --surface: #ffffff;
+  --error: #b00020;
+  --on-primary: #ffffff;
+  --on-secondary: #000000;
+  --on-background: #000000;
+  --on-surface: #000000;
+  --on-error: #ffffff;
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.12);
+  --border-radius: 4px;
+  --card-radius: 8px;
+  --button-radius: 28px;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "JetBrains Mono", monospace;
+  line-height: 1.6;
+  color: var(--on-background);
+  background-color: var(--background);
+}
+
+/* All text is now JetBrains Mono by default */
+.code-font {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9rem;
+  letter-spacing: -0.5px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 20px;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  padding: 16px 24px;
+  box-shadow: var(--box-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-size: 1.5rem;
+}
+
+footer {
+  background-color: var(--primary-dark);
+  color: var(--on-primary);
+  text-align: center;
+  padding: 16px;
+  margin-top: 32px;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Dashboard Layout */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Material Card Styles */
+.expense-form-section,
+.chart-section,
+.expenses-section {
+  background-color: var(--surface);
+  border-radius: var(--card-radius);
+  padding: 24px;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+}
+
+.expense-form-section:hover,
+.chart-section:hover,
+.expenses-section:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-weight: 500;
+  font-size: 1.25rem;
+  letter-spacing: 0.25px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding-bottom: 12px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+  transition: var(--transition);
+  letter-spacing: 0.25px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px 4px 0 0;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus {
+  outline: none;
+  border-bottom: 2px solid var(--primary-color);
+  background-color: rgba(0, 0, 0, 0.02);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+small {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.75rem;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Material Button Styles */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: var(--on-primary);
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--button-radius);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.75px;
+  text-transform: uppercase;
+  transition: var(--transition);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.2);
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  background-color: var(--primary-dark);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  transform: translateY(0);
+}
+
+/* Material Floating Action Button */
+.fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--secondary-color);
+  color: var(--on-secondary);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), 0 3px 5px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 24px;
+  z-index: 100;
+}
+
+.fab:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Chart Styles */
+.chart-container {
+  width: 100%;
+  height: 300px;
+  margin-top: 16px;
+}
+
+/* Expense List Styles */
+.expense-list {
+  margin-top: 20px;
+}
+
+.expense-item {
+  background-color: var(--surface);
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: var(--card-radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition);
+  border-left: 4px solid var(--expense-color);
+}
+
+.expense-item:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+.expense-item.income {
+  border-left-color: var(--income-color);
+}
+
+.expense-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+
+.expense-date {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+  min-width: 150px;
+}
+
+.expense-description {
+  flex: 1;
+  margin: 0 16px;
+  font-size: 0.95rem;
+}
+
+.expense-amount {
+  font-weight: 600;
+  color: var(--expense-color);
+  text-align: right;
+  min-width: 100px;
+  font-size: 1.1rem;
+}
+
+.income .expense-amount {
+  color: var(--income-color);
+}
+
+.expense-receipt {
+  margin-left: 16px;
+}
+
+.expense-receipt a {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 16px;
+  background-color: rgba(98, 0, 238, 0.05);
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.expense-receipt a:hover {
+  background-color: rgba(98, 0, 238, 0.1);
+}
+
+.no-expenses {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+  padding: 32px 0;
+  font-style: italic;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .expense-details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .expense-date,
+  .expense-description,
+  .expense-amount {
+    margin: 3px 0;
+    width: 100%;
+    text-align: left;
+  }
+
+  .expense-item {
+    flex-direction: column;
+  }
+
+  .expense-receipt {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  background: white;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  width: 100%;
+}
+.modal-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

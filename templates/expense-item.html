@@ -1,0 +1,13 @@
+{{define "expense-item"}}
+<div class="expense-item {{expenseOrIncome .Amount}}">
+  <div class="expense-details">
+    <div class="expense-date">{{.Timestamp.Format "Jan 02, 2006 3:04 PM"}}</div>
+    <div class="expense-description">
+      <strong>{{.Category}}</strong> - {{.Description}}
+    </div>
+    <div class="expense-amount">
+      ₹{{printf "%.2f" (divideBy .Amount 100.0)}}
+    </div>
+  </div>
+</div>
+{{end}}

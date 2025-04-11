@@ -1,0 +1,22 @@
+{{define "index.html"}} {{template "layout" .}} {{end}} {{define "content"}}
+<div class="container">
+  <div class="dashboard">
+    <section class="expense-form-section">
+      <h2>Add Expense/Income</h2>
+      {{template "expense-form" .}}
+    </section>
+
+    <section class="chart-section">
+      <h2>Expense Overview</h2>
+      <div class="chart-container">
+        <canvas id="expenseChart"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <section class="expenses-section">
+    <h2>Transaction History</h2>
+    <div id="expense-list-container">{{template "expense-list" .}}</div>
+  </section>
+</div>
+{{end}}

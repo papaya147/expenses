@@ -2,8 +2,6 @@ package api
 
 import (
 	"time"
-
-	"github.com/papaya147/expenses/db/sqlc"
 )
 
 type CreateCategoryInput struct {
@@ -19,10 +17,10 @@ type Category struct {
 }
 
 type CreateTxnInput struct {
-	Timestamp   int64   `json:"timestamp"`
-	Amount      int64   `json:"amount"`
-	Category    string  `json:"category"`
-	Description *string `json:"description"`
+	Timestamp   string  `schema:"timestamp"`
+	AmountPaisa float64 `schema:"amount"`
+	Category    string  `schema:"category"`
+	Description *string `schema:"description"`
 }
 
 type ListTxnsInput struct {
@@ -42,19 +40,14 @@ type UpdateTxnInput struct {
 }
 
 type Txn struct {
-	ID          int64   `json:"id"`
-	Timestamp   string  `json:"timestamp"`
-	Amount      int64   `json:"amount"`
-	Category    string  `json:"category"`
-	Description *string `json:"description"`
+	ID          int64     `json:"id"`
+	Timestamp   time.Time `json:"timestamp"`
+	Amount      int64     `json:"amount"`
+	Category    string    `json:"category"`
+	Description *string   `json:"description"`
 }
 
-func ToTxn(txn sqlc.Txn) Txn {
-	return Txn{
-		ID:          txn.ID,
-		Timestamp:   txn.Timestamp.Format(time.DateTime),
-		Amount:      txn.Amount,
-		Category:    txn.Category,
-		Description: txn.Description,
-	}
+type TxnChart struct {
+	Timestamps []string  `json:"timestamps"`
+	Amounts    []float64 `json:"amounts"`
 }

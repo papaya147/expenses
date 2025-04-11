@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"maps"
 	"net/http"
+
+	"github.com/gorilla/schema"
 )
 
 var maxBytes = 10 << 20
@@ -17,17 +18,20 @@ func SetMaxBytes(mb int) {
 }
 
 // Read reads a json request body into the specified struct. The maximum read bytes is defined by `maxBytes`.
+
 func Read[I any](w http.ResponseWriter, r *http.Request) (I, error) {
+	var out I
+
 	r.Body = http.MaxBytesReader(w, r.Body, int64(maxBytes))
 
-	var out I
-	dec := json.NewDecoder(r.Body)
-	if err := dec.Decode(&out); err != nil {
-		return out, errors.New("bad request")
+	if err := r.ParseForm(); err != nil {
+		return out, errors.New("unable to parse form data")
 	}
 
-	if err := dec.Decode(&struct{}{}); err != io.EOF {
-		return out, errors.New("json body must contain only one object")
+	decoder := schema.NewDecoder()
+
+	if err := decoder.Decode(&out, r.Form); err != nil {
+		return out, errors.New("invalid form input")
 	}
 
 	return out, nil

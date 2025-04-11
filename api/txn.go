@@ -1,6 +1,7 @@
 package api
 
 import (
+	"math"
 	"net/http"
 	"time"
 
@@ -15,9 +16,16 @@ func (s *Server) CreateTxn(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
+	timestamp, err := time.Parse("2006-01-02T15:04", input.Timestamp)
+	if err != nil {
+		return err
+	}
+
+	amount := int64(math.Round(input.AmountPaisa * 100))
+
 	arg := sqlc.CreateTxnParams{
-		Timestamp:   time.Unix(input.Timestamp, 0),
-		Amount:      input.Amount,
+		Timestamp:   timestamp,
+		Amount:      amount,
 		Category:    input.Category,
 		Description: input.Description,
 	}
@@ -26,7 +34,10 @@ func (s *Server) CreateTxn(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	Write(w, http.StatusOK, ToTxn(t))
+	if err := s.templates.ExecuteTemplate(w, "expense-item", Txn(t)); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -64,7 +75,7 @@ func (s *Server) ListTxns(w http.ResponseWriter, r *http.Request) error {
 
 	res := make([]Txn, len(t))
 	for i, txn := range t {
-		res[i] = ToTxn(txn)
+		res[i] = Txn(txn)
 	}
 
 	Write(w, http.StatusOK, res)
@@ -91,6 +102,31 @@ func (s *Server) UpdateTxn(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	Write(w, http.StatusOK, ToTxn(t))
+	if err := s.templates.ExecuteTemplate(w, "expense-item", Txn(t)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *Server) TxnChart(w http.ResponseWriter, r *http.Request) error {
+	ctx := r.Context()
+
+	ts, err := s.store.ListTxnsByDate(ctx)
+	if err != nil && sqlc.ErrorCode(err) != sqlc.NoDataFound {
+		return err
+	}
+
+	timestamps := make([]string, len(ts))
+	amounts := make([]float64, len(ts))
+	for i, t := range ts {
+		timestamps[i] = t.Date.(string)
+		amounts[i] = float64(t.Amount) / 100
+	}
+
+	Write(w, http.StatusOK, TxnChart{
+		Timestamps: timestamps,
+		Amounts:    amounts,
+	})
 	return nil
 }

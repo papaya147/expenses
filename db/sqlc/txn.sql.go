@@ -143,6 +143,43 @@ func (q *Queries) ListTxns(ctx context.Context, arg ListTxnsParams) ([]Txn, erro
 	return items, nil
 }
 
+const listTxnsByDate = `-- name: ListTxnsByDate :many
+SELECT
+  DATE(timestamp) AS date,
+  CAST(SUM(amount) AS integer) AS amount
+FROM txn
+GROUP BY DATE(timestamp)
+ORDER BY DATE(timestamp)
+`
+
+type ListTxnsByDateRow struct {
+	Date   interface{}
+	Amount int64
+}
+
+func (q *Queries) ListTxnsByDate(ctx context.Context) ([]ListTxnsByDateRow, error) {
+	rows, err := q.db.QueryContext(ctx, listTxnsByDate)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []ListTxnsByDateRow
+	for rows.Next() {
+		var i ListTxnsByDateRow
+		if err := rows.Scan(&i.Date, &i.Amount); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updateTxn = `-- name: UpdateTxn :one
 UPDATE
     txn
