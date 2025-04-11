@@ -1,0 +1,11 @@
+version: "2"
+sql:
+  - engine: "sqlite"
+    queries: "db/query"
+    schema: "db/migration"
+    gen:
+      go:
+        package: "sqlc"
+        out: "db/sqlc"
+        emit_exact_table_names: true
+        emit_pointers_for_null_types: true
