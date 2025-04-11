@@ -11,9 +11,9 @@ CREATE TABLE txn(
 );
 
 INSERT INTO category
-    VALUES ('food'),
-('transport'),
-('entertainment'),
-('clothes'),
-('other');
+    VALUES ('Food'),
+('Transport'),
+('Entertainment'),
+('Clothes'),
+('Other');
 

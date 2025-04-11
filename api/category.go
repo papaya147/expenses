@@ -31,7 +31,11 @@ func (s *Server) ListCategories(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 
-	cs, err := s.store.ListCategories(ctx, input.Name)
+	arg := sqlc.ListCategoriesParams{
+		Name:  input.Name,
+		Limit: 100,
+	}
+	cs, err := s.store.ListCategories(ctx, arg)
 	if err != nil && sqlc.ErrorCode(err) != sqlc.NoDataFound {
 		return err
 	}

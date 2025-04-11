@@ -14,3 +14,4 @@ WHERE (name = sqlc.narg('name')
     OR sqlc.narg('name') IS NULL)
 ORDER BY
     name
+LIMIT ?1;

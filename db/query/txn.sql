@@ -25,7 +25,7 @@ AND (category = sqlc.narg('category')
     OR sqlc.narg('category') IS NULL)
 ORDER BY
     timestamp DESC
-LIMIT ? OFFSET ?;
+LIMIT ?1 OFFSET ?2;
 
 -- name: DeleteTxn :one
 DELETE FROM txn

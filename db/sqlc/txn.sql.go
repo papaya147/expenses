@@ -97,24 +97,24 @@ AND (category = ?5
     OR ?5 IS NULL)
 ORDER BY
     timestamp DESC
-LIMIT ? OFFSET ?
+LIMIT ?1 OFFSET ?2
 `
 
 type ListTxnsParams struct {
+	Limit     int64
+	Offset    int64
 	StartTime *time.Time
 	EndTime   *time.Time
 	Category  *string
-	Limit     int64
-	Offset    int64
 }
 
 func (q *Queries) ListTxns(ctx context.Context, arg ListTxnsParams) ([]Txn, error) {
 	rows, err := q.db.QueryContext(ctx, listTxns,
+		arg.Limit,
+		arg.Offset,
 		arg.StartTime,
 		arg.EndTime,
 		arg.Category,
-		arg.Limit,
-		arg.Offset,
 	)
 	if err != nil {
 		return nil, err

@@ -27,15 +27,21 @@ SELECT
     name
 FROM
     category
-WHERE (name = ?1
-    OR name LIKE '%' || ?1 || '%'
-    OR ?1 IS NULL)
+WHERE (name = ?2
+    OR name LIKE '%' || ?2 || '%'
+    OR ?2 IS NULL)
 ORDER BY
     name
+LIMIT ?1
 `
 
-func (q *Queries) ListCategories(ctx context.Context, name *string) ([]string, error) {
-	rows, err := q.db.QueryContext(ctx, listCategories, name)
+type ListCategoriesParams struct {
+	Limit int64
+	Name  *string
+}
+
+func (q *Queries) ListCategories(ctx context.Context, arg ListCategoriesParams) ([]string, error) {
+	rows, err := q.db.QueryContext(ctx, listCategories, arg.Limit, arg.Name)
 	if err != nil {
 		return nil, err
 	}
