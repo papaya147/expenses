@@ -11,9 +11,24 @@ CREATE TABLE txn(
 );
 
 INSERT INTO category
-    VALUES ('Food'),
-('Transport'),
-('Entertainment'),
-('Clothes'),
-('Other');
+    VALUES ('Grocery'),
+('Fruits and Vegetables'),
+('Apparels'),
+('Home Needs'),
+('Toiletries'),
+('Pet Food'),
+('Doctor'),
+('Veterinarian'), 
+('Electricity'),
+('Maintenance'),
+('Maid'),
+('Carwash'),
+('Travel'),
+('Transportation'),
+('Petrol/Diesel'),
+('Gas Cylinder'),
+('Flowers'),
+('Miscellaneous'),
+('Donation'),
+('Medicines');
 
