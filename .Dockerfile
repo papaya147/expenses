@@ -17,6 +17,7 @@ WORKDIR /server
 
 COPY --from=builder /server/app ./app
 COPY templates templates
+COPY static static
 COPY db/migration ./db/migration
 
 CMD ["./app"]
